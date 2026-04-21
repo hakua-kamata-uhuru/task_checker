@@ -3,6 +3,9 @@ import Header from './Header.vue'
 import Select from './Select.vue'
 import ToDoList from './ToDoList.vue';
 import AddCircleIcon from 'vue-material-design-icons/PlusCircleOutline.vue'
+import FormModal from './FormModal.vue';
+import { ref } from 'vue' //追加
+const showModal = ref(false); //追加
 </script>
 
 <template>
@@ -10,7 +13,8 @@ import AddCircleIcon from 'vue-material-design-icons/PlusCircleOutline.vue'
     <Header />
     <div class="genre">
       <Select />
-      <AddCircleIcon class="add_circle_outline_icon"/>
+      <AddCircleIcon class="add_circle_outline_icon" @click="showModal = true"/>
+      <FormModal v-model="showModal"/>
     </div>
     <div class="contents">
       <ToDoList />
