@@ -1,5 +1,14 @@
 <script setup>
+import { computed } from 'vue'
 import GenreBody from './GenreBody.vue'
+
+const props = defineProps({
+  body: String
+})
+
+const component = computed(() =>  {
+  return props.body === 'taskBody' ? null : GenreBody
+})
 </script>
 
 <template>
