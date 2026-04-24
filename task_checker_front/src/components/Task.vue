@@ -4,7 +4,7 @@ import Select from './Select.vue'
 
 <template>
    <div class="task">
-      <span class="task_date">2025-04-21</span>
+      <span class="task_date">2021-01-01</span>
       <div class="task_text_contents">
         <h3 class="task_title">タスク名</h3>
         <p class="task_sentence">タスクの説明</p>

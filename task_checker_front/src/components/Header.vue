@@ -14,7 +14,7 @@ import CheckAll from 'vue-material-design-icons/CheckAll.vue';
           placeholder="タイトルで検索"
           class="search-input"
           type="search"
-          aria-label="検索する"
+          aria-label="検索"
         />
         <button
           type="submit"

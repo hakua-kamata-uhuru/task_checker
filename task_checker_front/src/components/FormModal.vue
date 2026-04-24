@@ -1,23 +1,24 @@
 <script setup>
 import { computed } from 'vue'
-import GenreBody from './GenreBody.vue'
+import GenreBody from './GenreBody.vue';
 import TaskBody from './TaskBody.vue'
+
 
 const props = defineProps({
   body: String
 })
 
 const component = computed(() =>  {
-   return props.body === 'taskBody' ? TaskBody: GenreBody
+  return props.body === 'taskBody' ? TaskBody: GenreBody
 })
 </script>
 
 <template>
-  
   <Modal v-model="showModal">
-    <GenreBody />
+    <component :is="component" />
   </Modal>
 </template>
+
 <style>
 .vm {
   height: 75vh;

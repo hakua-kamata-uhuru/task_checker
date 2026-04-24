@@ -8,7 +8,6 @@ import './assets/main.css'
 const app = createApp(App)
 app.component('Modal', Modal);
 app.mount('#app')
-// createApp(App).mount('#app') この記述を削除 
- 
+// createApp(App).mount('#app') この記述を削除
  
  

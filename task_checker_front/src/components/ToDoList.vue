@@ -1,7 +1,8 @@
 <script setup>
 import MenuIcon from 'vue-material-design-icons/Menu.vue'
 import AddCircleIcon from 'vue-material-design-icons/PlusCircleOutline.vue'
-import Task from './Task.vue';
+import Task from './Task.vue'
+
 import FormModal from './FormModal.vue';
 
 import { ref } from 'vue'
@@ -17,10 +18,10 @@ const showModal = ref(false)
           class="add_circle_outline_icon"
           @click="showModal = true"
         />
-        <FormModal v-model="showModal" body="taskBody" />
+        <FormModal v-model="showModal" body="taskBody"/>
       </div>
       <div class="task_field"></div>
-        <Task /> <!--Taskの呼び出し-->
+        <Task />
     </div>
 </template>
 

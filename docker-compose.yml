@@ -4,18 +4,18 @@ services:
     app:
       container_name: app
       build: 
-        context: ./task-checker-front
+        context: ./task_checker_front
         dockerfile: Dockerfile
       ports:
         - "5173:5173"
       volumes:
-        - ./task-checker-front:/app
+        - ./task_checker_front:/app
         - /app/node_modules
 
     server:
       container_name: server
       build: 
-        context: ./task-checker-back
+        context: ./task_checker_back
         dockerfile: Dockerfile
       ports:
         - "3000:3000"
@@ -28,7 +28,7 @@ services:
       ports:
         - 5433:5432
       env_file:
-        - ./task-checker-back/.env
+        - ./task_checker_back/.env
       volumes:
         - taskchecker-db-volume:/var/lib/postgresql/data
 volumes:
