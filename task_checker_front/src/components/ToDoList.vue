@@ -2,8 +2,9 @@
 import MenuIcon from 'vue-material-design-icons/Menu.vue'
 import AddCircleIcon from 'vue-material-design-icons/PlusCircleOutline.vue'
 import Task from './Task.vue'
-
 import FormModal from './FormModal.vue';
+import { useTaskStore } from '../stores/TaskStore'; 
+const taskStore = useTaskStore(); 
 
 import { ref } from 'vue'
 const showModal = ref(false)
@@ -20,8 +21,9 @@ const showModal = ref(false)
         />
         <FormModal v-model="showModal" body="taskBody"/>
       </div>
-      <div class="task_field"></div>
-        <Task />
+      <div class="task_field" v-for="task in taskStore.tasks" :key="task.id">
+        <Task :task="task"/>
+      </div>
     </div>
 </template>
 

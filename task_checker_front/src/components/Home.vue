@@ -4,21 +4,22 @@ import Select from './Select.vue'
 import ToDoList from './ToDoList.vue';
 import AddCircleIcon from 'vue-material-design-icons/PlusCircleOutline.vue'
 import FormModal from './FormModal.vue';
-import api from '../api/axios' 
 import { ref, onMounted } from 'vue'
+import { useTaskStore } from '../stores/TaskStore' 
+import { useGenreStore } from '../stores/GenreStore'
 const showModal = ref(false);
+const taskStore = useTaskStore(); //追加
+const genreStore = useGenreStore();
 
 onMounted(async()=> {
-  try {
-  const AllTasks = await api.get('/tasks')
-  console.log(AllTasks)
-  } catch(error) {
-    console.log(erorr)
+  try{
+    await taskStore.fetchAllTasks();
+  }catch(error){
+    console.log(error)
   }
 
   try {
-    const AllGenres = await api.get('/genres')
-    console.log(AllGenres)
+    await genreStore.fetchAllGenres();
   }catch(error){
     console.log(error)
   }
