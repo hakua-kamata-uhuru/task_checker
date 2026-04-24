@@ -11,6 +11,11 @@ const showModal = ref(false);
 const taskStore = useTaskStore(); //追加
 const genreStore = useGenreStore();
 
+const changeSelectedGenreId = (e) => {
+  const selectGenreId = e.target.value;
+  taskStore.filterTasks(selectGenreId); 
+}
+
 onMounted(async()=> {
   try{
     await taskStore.fetchAllTasks();
@@ -32,7 +37,7 @@ onMounted(async()=> {
   <div class="main">
     <Header />
     <div class="genre">
-      <Select />
+      <Select @change="changeSelectedGenreId"/> 
       <AddCircleIcon class="add_circle_outline_icon" @click="showModal = true"/>
       <FormModal v-model="showModal"/>
     </div>
