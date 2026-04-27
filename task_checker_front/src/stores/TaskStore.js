@@ -26,7 +26,7 @@ export const useTaskStore = defineStore('task', () => {
       filteredTasks.value = tasks.value.filter(task => numericGenreId === task.genreId)
     }
   }
-  return { tasks, filteredTasks, fetchAllTasks,filterTasks }
+  
 
   // フォームのデータをサーバにリクエストを送る機能を実装する。
   // new TaskにはTaskBody.vueのオブジェクトが渡される。
