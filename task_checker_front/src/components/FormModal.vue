@@ -3,6 +3,14 @@ import { computed } from 'vue'
 import GenreBody from './GenreBody.vue';
 import TaskBody from './TaskBody.vue'
 
+//子コンポーネントのTaskBodyの処理を親コンポーネントのToDoListに伝達する役割
+const emit = defineEmits(['close-modal'])  
+
+// closeModal関数を追加
+const closeModal = () => {
+  emit('close-modal')
+}
+
 
 const props = defineProps({
   body: String
@@ -15,7 +23,7 @@ const component = computed(() =>  {
 
 <template>
   <Modal v-model="showModal">
-    <component :is="component" />
+    <component :is="component" @close-modal="closeModal" />
   </Modal>
 </template>
 

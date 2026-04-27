@@ -26,18 +26,18 @@ const taskStyle = computed(() => {
 </script>
 
 <template>
-   <div class="task" :style="taskStyle">    
-      <span class="task_date">{{formattedDeadlineDate}}</span>   <!---追加-->
-      <div class="task_text_contents">                                                <!---追加-->
-        <h3 class="task_title">{{ task.name }}</h3>                          <!---追加-->
-        <p class="task_sentence">{{ task.explanation}}</p>        <!---追加-->
-      </div>
-      <div class="image-container">
-        <div class="image-wrapper">
-          <img
-            :src="'https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg'"
-            class="task-image"
-          />
+   <div class="task" :style="taskStyle">
+      <span class="task_date">{{ formattedDeadlineDate }}</span>
+      <div class="task_text_contents">
+        <h3 class="task_title">{{ task.name }}</h3>
+        <p class="task_sentence">{{ task.explanation}}</p>
+        <div v-if="task.image_url" class="image-container"> 
+          <div class="image-wrapper">
+            <img
+              :src="task.image_url"
+              class="task-image"
+            />
+          </div>
         </div>
       </div>
       <div class="task_input_contents">

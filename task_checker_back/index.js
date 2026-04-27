@@ -11,6 +11,13 @@ app.use(cors({
   credentials: true,
 }));
 
+// multerのインポート
+const multer = require('multer');
+// クライアントからアップロードされたファイルの保存ディレクトリをuploads/に設定
+const upload = multer({ dest: 'uploads/' });
+// クライアントがブラウザから画像にアクセスするためのURL
+app.use('/uploads', express.static('uploads'))
+
 app.use(express.json());
 
 app.listen(3000, () => {
@@ -26,7 +33,16 @@ const prisma = new PrismaClient();
 app.get("/tasks", async(req, res) => {
   try {
   const AllTasks = await prisma.task.findMany();
-  res.json(AllTasks)
+  const updatedTasks = AllTasks.map((task) => {
+    if (task.image_url) {
+      task.image_url = `http://localhost:3000/${task.image_url}`
+    } else {
+      task.image_url = null;
+    }
+    return task;
+  });
+
+  res.json(updatedTasks)
   } catch(error) {
   console.log(error)
   }
@@ -40,5 +56,36 @@ app.get("/genres", async(req, res) => {
   res.json(AllGenres)
   } catch(error) {
   console.log(error)
+  }
+})
+
+//クライアント側から送信された単一のファイルを処理する。
+app.post("/tasks", upload.single('image_url'), async (req, res) => {
+  console.log("リクエストボディ",req.body)
+  try {
+    const imagePath = req.file ? req.file.path : null; // アップロードした画像のパス、ファイルが存在しない場合はNULL
+    console.log("画像",req.file)
+    const deadlineDate = new Date(req.body.deadlineDate)
+    const savedData = await prisma.task.create({
+      data: {
+        ...req.body,
+        image_url: imagePath,
+        deadlineDate: deadlineDate,
+        status: Number(req.body.status), //データベースでは数値で保存する必要があるからNumber型
+        genreId: Number(req.body.genreId),  //同上
+      },
+    });
+
+   if (savedData.image_url) {
+      savedData.image_url = `http://localhost:3000/${savedData.image_url}`
+      console.log(savedData.image_url)
+    } else {
+      savedData.image_url = null;
+    }
+
+    res.json(savedData)
+  } catch(error) {
+    console.log(error)
+    res.status(500).send("タスクの保存に失敗しました")
   }
 })

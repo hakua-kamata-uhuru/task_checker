@@ -8,7 +8,7 @@ services:
         dockerfile: Dockerfile
       ports:
         - "5173:5173"
-      volumes:
+      volumes:  #
         - ./task_checker_front:/app
         - /app/node_modules
 
@@ -21,6 +21,8 @@ services:
         - "3000:3000"
       depends_on:
         - db
+      volumes:
+        - uploads-volume:/app/uploads
 
     db:
       container_name: db
@@ -33,3 +35,4 @@ services:
         - taskchecker-db-volume:/var/lib/postgresql/data
 volumes:
   taskchecker-db-volume:
+  uploads-volume:
