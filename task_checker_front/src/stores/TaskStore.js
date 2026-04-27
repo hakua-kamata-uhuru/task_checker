@@ -46,6 +46,7 @@ export const useTaskStore = defineStore('task', () => {
         }
       });
       const addedTask = response.data;
+      tasks.value.push(addedTask); //追加(サーバーサイドから返却されたデータを受け取り値をaddedTaskに代入する
     }catch(error){
       console.log('タスクデータの保存ができませんでした', error);
     }
