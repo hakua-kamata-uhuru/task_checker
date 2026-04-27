@@ -17,6 +17,11 @@ const props = defineProps({
 const toggleShowTasks = () => {
   showTask.value = !showTask.value
 }
+//モーダルを閉じるにはfalseにする必要性がある。親コンポーネントがカスタムイベントを受け取る
+const closeModal = () => {
+  showModal.value = false
+}
+
 </script>
 
 <template>
@@ -29,7 +34,8 @@ const toggleShowTasks = () => {
         class="add_circle_outline_icon"
         @click="showModal = true"
       />
-      <FormModal v-model="showModal" body="taskBody"/>
+      <!--カスタムイベントの処理をする。-->
+      <FormModal v-model="showModal" body="taskBody" @close-modal="closeModal"/> 
     </div>
     <div v-if="showTask">
       <div class="task_field" v-for="task in taskStore.filteredTasks" :key="task.id">

@@ -14,8 +14,11 @@ const task = ref({
 
 const taskStore = useTaskStore();
 
+const emit = defineEmits(['close-modal']) //カスタムイベントを追加
+
 const submitTask = async() => {
   taskStore.addTask(task.value);
+  emit('close-modal') //追加
 }
 
 const genreSelect = (e) => {
