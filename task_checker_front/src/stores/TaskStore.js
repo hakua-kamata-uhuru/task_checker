@@ -51,7 +51,5 @@ export const useTaskStore = defineStore('task', () => {
       console.log('タスクデータの保存ができませんでした', error);
     }
   }
-
   return { tasks, filteredTasks, fetchAllTasks, filterTasks, addTask }
-
 })
