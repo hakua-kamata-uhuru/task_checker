@@ -14,15 +14,23 @@ const formattedDeadlineDate = computed(() => {
   return date.toLocaleDateString('ja-JP')
 })
 
+const taskStyle = computed(() => {
+  // 現在の日時より deadlineDate が後であるかをチェックする
+  const isDeadlineAfterToday = new Date(props.task.deadlineDate) > new Date();
+  // 条件に基づいてスタイルオブジェクトを返す
+  return {
+    backgroundColor: isDeadlineAfterToday ? 'white' : 'rgb(250, 194, 194)',
+  };
+})
 
 </script>
 
 <template>
-   <div class="task">
-      <span class="task_date">{{ formattedDeadlineDate }}</span>
-      <div class="task_text_contents">                        
-        <h3 class="task_title">{{ task.name }}</h3>              
-        <p class="task_sentence">{{ task.explanation}}</p>   
+   <div class="task" :style="taskStyle">    
+      <span class="task_date">{{formattedDeadlineDate}}</span>   <!---追加-->
+      <div class="task_text_contents">                                                <!---追加-->
+        <h3 class="task_title">{{ task.name }}</h3>                          <!---追加-->
+        <p class="task_sentence">{{ task.explanation}}</p>        <!---追加-->
       </div>
       <div class="image-container">
         <div class="image-wrapper">

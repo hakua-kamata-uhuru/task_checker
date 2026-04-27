@@ -11,11 +11,6 @@ const showModal = ref(false);
 const taskStore = useTaskStore(); //追加
 const genreStore = useGenreStore();
 
-const changeSelectedGenreId = (e) => {
-  const selectGenreId = e.target.value;
-  taskStore.filterTasks(selectGenreId); 
-}
-
 onMounted(async()=> {
   try{
     await taskStore.fetchAllTasks();
@@ -30,6 +25,24 @@ onMounted(async()=> {
   }
 })
 
+const taskStatusElements = [
+    "ToDo",
+    "Pending",
+    "Doing(ToDay)",
+    "WIP",
+    "Check",
+    "Done",
+  ]
+
+const filterTasksByStatus = (statusIndex) => {
+  const index = statusIndex
+  return taskStore.filteredTasks.filter(task => task.status == index);
+}
+
+const changeSelectedGenreId = (e) => {
+  const selectGenreId = e.target.value;
+  taskStore.filterTasks(selectGenreId); //追記
+}
 
 </script>
 
@@ -37,12 +50,14 @@ onMounted(async()=> {
   <div class="main">
     <Header />
     <div class="genre">
-      <Select @change="changeSelectedGenreId"/> 
+      <Select @change="changeSelectedGenreId"/>        <!---追加-->
       <AddCircleIcon class="add_circle_outline_icon" @click="showModal = true"/>
-      <FormModal v-model="showModal"/>
+      <FormModal v-model="showModal" body="genreBody"/>
     </div>
     <div class="contents">
-      <ToDoList />
+      <div v-for="(status, index) in taskStatusElements" :key="index">
+        <ToDoList :tasks="filterTasksByStatus(index)" :key="index" :status="status"/>
+      </div>
     </div>
   </div>
 </template>

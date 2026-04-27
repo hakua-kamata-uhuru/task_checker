@@ -5,26 +5,38 @@ import Task from './Task.vue'
 import FormModal from './FormModal.vue';
 import { useTaskStore } from '../stores/TaskStore'; 
 const taskStore = useTaskStore(); 
-
 import { ref } from 'vue'
 const showModal = ref(false)
+
+const showTask = ref(true) // 追加
+const props = defineProps({
+  status: String, //末尾にカンマを追加
+  tasks: Object //追加
+})
+
+const toggleShowTasks = () => {
+  showTask.value = !showTask.value
+}
 </script>
 
 <template>
-    <div class="task_list">
-      <div class="section">
-        <MenuIcon class="section_ele" />
-        <span class="section_ele">ToDo</span>
-        <AddCircleIcon
-          class="add_circle_outline_icon"
-          @click="showModal = true"
-        />
-        <FormModal v-model="showModal" body="taskBody"/>
-      </div>
+  <div class="task_list">
+    <div class="section">
+      <MenuIcon class="section_ele" @click="toggleShowTasks"/>        <!---追加-->
+      <span class="section_ele">{{ props.status }}</span>
+      <AddCircleIcon
+        v-if="props.status == 'ToDo'"
+        class="add_circle_outline_icon"
+        @click="showModal = true"
+      />
+      <FormModal v-model="showModal" body="taskBody"/>
+    </div>
+    <div v-if="showTask">
       <div class="task_field" v-for="task in taskStore.filteredTasks" :key="task.id">
         <Task :task="task"/>
       </div>
     </div>
+  </div>
 </template>
 
 <style>
