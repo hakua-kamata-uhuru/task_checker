@@ -11,7 +11,6 @@ const closeModal = () => {
   emit('close-modal')
 }
 
-
 const props = defineProps({
   body: String
 })
