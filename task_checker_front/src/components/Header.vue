@@ -52,7 +52,7 @@ onMounted(() => {
         </button>
       </form>
     </div>
-    <div class="header-right" v-if="currentUser">
+    <div class="header-right">
       <button @click="handleSignOut" class="logout-button">
         ログアウト
       </button>
@@ -118,5 +118,15 @@ onMounted(() => {
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
+}
+
+.logout-button {
+  background-color: rgb(66, 163, 247);
+  color: white;
+  border-radius: 25px;
+  border-style: none;
+  padding: 8px 20px;
+  margin-bottom: 8px;
+  font-size: 15px;
 }
 </style>
