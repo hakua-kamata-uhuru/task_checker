@@ -1,5 +1,33 @@
 <script setup>
 import CheckAll from 'vue-material-design-icons/CheckAll.vue';
+import { auth, signOut, onAuthStateChanged } from '../firebase'; //追記
+import { useRouter } from 'vue-router';
+import { ref, onMounted } from 'vue'; //追記
+
+const router = useRouter();//追加
+const currentUser = ref(null); //追加
+
+//追加
+const handleSignOut = async() => {
+  try{
+    await signOut(auth)
+    router.push("/")
+  }catch(error){
+    console.log('ログアウトに失敗しました')
+  }
+}
+
+//ユーザがログイン中はauth.currentUserでログアウト中はNULLを返す。
+onMounted(() => {
+  onAuthStateChanged(auth, (user) => {
+    // ユーザーがログイン中の場合はcurrentUserの値を更新する
+    if(user) {
+      currentUser.value = auth.currentUser;
+    }else{
+      currentUser.value = null;
+    }
+  })
+})
 </script>
 
 <template>
@@ -8,7 +36,7 @@ import CheckAll from 'vue-material-design-icons/CheckAll.vue';
       <CheckAll class="header_icon" fontsize="large" />
       <span class="header-title">Task Checker</span>
     </div>
-    <div class="header-search">
+    <div class="header-search" v-if="currentUser">
       <form class="search-container">
         <input
           placeholder="タイトルで検索"
@@ -23,6 +51,11 @@ import CheckAll from 'vue-material-design-icons/CheckAll.vue';
           検索
         </button>
       </form>
+    </div>
+    <div class="header-right">
+      <button @click="handleSignOut" class="logout-button">
+        ログアウト
+      </button>
     </div>
   </div>
 </template>
@@ -85,5 +118,15 @@ import CheckAll from 'vue-material-design-icons/CheckAll.vue';
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
+}
+
+.logout-button {
+  background-color: rgb(66, 163, 247);
+  color: white;
+  border-radius: 25px;
+  border-style: none;
+  padding: 8px 20px;
+  margin-bottom: 8px;
+  font-size: 15px;
 }
 </style>
